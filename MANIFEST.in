@@ -1,0 +1,13 @@
+include dash_js9/third_party/*.js
+include dash_js9/third_party/*.css
+include dash_js9/dash_js9.min.js
+include dash_js9/dash_js9.min.js.map
+include dash_js9/async-*.js
+include dash_js9/async-*.js.map
+include dash_js9/*-shared.js
+include dash_js9/*-shared.js.map
+include dash_js9/metadata.json
+include dash_js9/package-info.json
+include README.md
+include LICENSE
+include package.json

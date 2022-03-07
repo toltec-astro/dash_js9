@@ -1,0 +1,62 @@
+{
+  "src/lib/components/DashJS9.react.js": {
+    "description": "DashJS9.",
+    "displayName": "DashJS9",
+    "methods": [],
+    "props": {
+      "id": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "The ID used to identify this component in Dash callbacks."
+      },
+      "setProps": {
+        "type": {
+          "name": "func"
+        },
+        "required": false,
+        "description": "Dash-assigned callback that should be called to report property changes\nto Dash, to make them available for callbacks."
+      },
+      "className": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "The class of the container."
+      },
+      "style": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "The style of the container."
+      },
+      "data": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "The data to load.",
+        "defaultValue": {
+          "value": "'js9_helper/data.fits'",
+          "computed": false
+        }
+      },
+      "custom_scripts": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "Custom scripts to be used in ``custom_script_calls``.\nThe values are inline functions that have signature like\n``function(aladin, data, props)``, where data are\npassed in ``custom_script_calls``."
+      },
+      "custom_script_calls": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "Custom script calls to make. The keys should match those in\n``custom_script``, and the vialues are passed to\n``custom_scripts``."
+      }
+    }
+  }
+}

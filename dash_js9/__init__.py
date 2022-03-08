@@ -126,8 +126,12 @@ def setup_js9_helper(app, install_dir='.'):
         'data.fits': 'application/fits',
         }
 
+    # resolve the url for dash routes prefix
+    routes_prefix = app.config.routes_pathname_prefix or ''
+    url = f'{routes_prefix}/{JS9_HELPER_URL}/'.replace('//', '/')
+
     @app.server.route(
-        JS9_HELPER_URL + '/<item>', endpoint='js9_helper')
+        url + '<item>', endpoint='js9_helper')
     def js9_helper(item):
         with open(install_dir.joinpath(item), 'rb') as fo:
             content = fo.read()

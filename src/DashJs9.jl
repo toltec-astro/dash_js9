@@ -5,7 +5,7 @@ using Dash
 const resources_path = realpath(joinpath( @__DIR__, "..", "deps"))
 const version = "0.0.1"
 
-include("djs9_dashjs9.jl")
+include("jl/djs9_dashjs9.jl")
 
 function __init__()
     DashBase.register_package(
@@ -16,13 +16,6 @@ function __init__()
             [
                 DashBase.Resource(
     relative_package_path = "third_party/js9prefs.js",
-    external_url = nothing,
-    dynamic = nothing,
-    async = nothing,
-    type = :js
-),
-DashBase.Resource(
-    relative_package_path = "third_party/js9support.min.js",
     external_url = nothing,
     dynamic = nothing,
     async = nothing,

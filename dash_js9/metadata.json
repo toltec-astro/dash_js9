@@ -2,7 +2,24 @@
   "src/lib/components/DashJS9.react.js": {
     "description": "DashJS9.",
     "displayName": "DashJS9",
-    "methods": [],
+    "methods": [
+      {
+        "name": "js9Resize",
+        "docblock": null,
+        "modifiers": [],
+        "params": [
+          {
+            "name": "width",
+            "type": null
+          },
+          {
+            "name": "height",
+            "type": null
+          }
+        ],
+        "returns": null
+      }
+    ],
     "props": {
       "id": {
         "type": {
@@ -34,14 +51,23 @@
       },
       "data": {
         "type": {
-          "name": "string"
+          "name": "arrayOf",
+          "value": {
+            "name": "shape",
+            "value": {
+              "blob": {
+                "name": "string",
+                "required": false
+              },
+              "options": {
+                "name": "object",
+                "required": false
+              }
+            }
+          }
         },
         "required": false,
-        "description": "The data to load.",
-        "defaultValue": {
-          "value": "'js9_helper/data.fits'",
-          "computed": false
-        }
+        "description": "The data to load."
       },
       "custom_scripts": {
         "type": {

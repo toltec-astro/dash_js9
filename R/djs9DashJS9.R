@@ -1,5 +1,6 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
+#' @export
 djs9DashJS9 <- function(id=NULL, className=NULL, custom_script_calls=NULL, custom_scripts=NULL, data=NULL, style=NULL) {
     
     props <- list(id=id, className=className, custom_script_calls=custom_script_calls, custom_scripts=custom_scripts, data=data, style=style)

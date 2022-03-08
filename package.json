@@ -24,7 +24,8 @@
   "author": "Zhiyuan Ma <zhiyuanma@umass.edu>",
   "license": "BSD",
   "dependencies": {
-    "ramda": "^0.26.1"
+    "ramda": "^0.26.1",
+    "react-resize-detector": "^6.7.6"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",

@@ -28,7 +28,10 @@ The values are inline functions that have signature like
 ``function(aladin, data, props)``, where data are
 passed in ``custom_script_calls``.}
 
-\item{data}{Character. The data to load.}
+\item{data}{List of lists containing elements 'blob', 'options'.
+those elements have the following types:
+  - blob (character; optional)
+  - options (named list; optional)s. The data to load.}
 
 \item{style}{Named list. The style of the container.}
 }

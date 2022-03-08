@@ -17,7 +17,10 @@ Keyword arguments:
 The values are inline functions that have signature like
 ``function(aladin, data, props)``, where data are
 passed in ``custom_script_calls``.
-- `data` (String; optional): The data to load.
+- `data` (optional): The data to load.. data has the following type: Array of lists containing elements 'blob', 'options'.
+Those elements have the following types:
+  - `blob` (String; optional)
+  - `options` (Dict; optional)s
 - `style` (Dict; optional): The style of the container.
 """
 function djs9_dashjs9(; kwargs...)

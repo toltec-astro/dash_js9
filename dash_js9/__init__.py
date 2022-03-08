@@ -71,10 +71,6 @@ _js_dist.extend(
             'namespace': package_name
         },
         {
-            'relative_package_path': 'third_party/js9support.min.js',
-            'namespace': package_name
-        },
-        {
             'relative_package_path': 'third_party/js9.min.js',
             'namespace': package_name
         },
@@ -108,17 +104,6 @@ _css_dist = [
         'namespace': package_name,
         },
     ]
-    # + [
-    # {
-    #     "relative_package_path": f'third_party/font/{name}',
-    #     'namespace': package_name
-    #     }
-    # for name in [
-    #     "context-menu-icons.eot",
-    #     "context-menu-icons.woff",
-    #     "context-menu-icons.ttf",
-    #     "context-menu-icons.woff2"]
-    # ]
 
 
 for _component in __all__:
@@ -126,6 +111,7 @@ for _component in __all__:
     setattr(locals()[_component], '_css_dist', _css_dist)
 
 
+JS9_SUPPORT = "https://js9.si.edu/js9/js9support.min.js"
 JS9_HELPER_URL = '/js9_helper'
 
 

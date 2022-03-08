@@ -25,8 +25,14 @@ Keyword arguments:
     are inline functions that have signature like ``function(aladin,
     data, props)``, where data are passed in ``custom_script_calls``.
 
-- data (string; default 'js9_helper/data.fits'):
+- data (list of dicts; optional):
     The data to load.
+
+    `data` is a list of dicts with keys:
+
+    - blob (string; optional)
+
+    - options (dict; optional)
 
 - style (dict; optional):
     The style of the container."""

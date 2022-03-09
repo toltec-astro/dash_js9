@@ -15,13 +15,6 @@ function __init__()
             version = version,
             [
                 DashBase.Resource(
-    relative_package_path = "third_party/js9prefs.js",
-    external_url = nothing,
-    dynamic = nothing,
-    async = nothing,
-    type = :js
-),
-DashBase.Resource(
     relative_package_path = "third_party/js9.min.js",
     external_url = nothing,
     dynamic = nothing,
@@ -50,14 +43,14 @@ DashBase.Resource(
     type = :js
 ),
 DashBase.Resource(
-    relative_package_path = "third_party/js9.css",
+    relative_package_path = "third_party/js9support.css",
     external_url = nothing,
     dynamic = nothing,
     async = nothing,
     type = :css
 ),
 DashBase.Resource(
-    relative_package_path = "third_party/js9support.css",
+    relative_package_path = "third_party/js9.css",
     external_url = nothing,
     dynamic = nothing,
     async = nothing,

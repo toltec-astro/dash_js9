@@ -46,7 +46,7 @@ export default class DashJS9 extends Component {
             console.log("js9wrapper not created")
         }
     }
-
+    
     js9Resize(width, height) {
         console.log("resize:", width, height);
         const js9c = this.js9c.current;
@@ -74,11 +74,12 @@ export default class DashJS9 extends Component {
                     style={style}
                     >
                         <ResizeDetector
-                        handleHeight={true}
+                        handleHeight={false}
                         handleWidth={true}
                         refreshMode="debounce"
                         refreshOptions={{trailing: true}}
                         refreshRate={50}
+                        skipOnMount={false}
                         onResize={this.js9Resize}
                         />
                         <div
@@ -92,7 +93,7 @@ export default class DashJS9 extends Component {
                         ref={this.js9c}
                         data-width="100%"
                         data-height="512px"
-                        style={{'maxHeight': '80vh'}}
+                        style={{maxHeight: "80vh"}}
                         />
                         <div
                         id={id + '-js9Colorbar'}

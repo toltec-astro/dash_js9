@@ -1,9 +1,10 @@
 from __future__ import print_function as _
 
-import os as _os
 import sys as _sys
 import json
 from pathlib import Path
+from flask import send_from_directory
+import re
 
 import dash as _dash
 
@@ -17,15 +18,14 @@ if not hasattr(_dash, '__plotly_dash') and not hasattr(_dash, 'development'):
           'named \n"dash.py" in your current directory.', file=_sys.stderr)
     _sys.exit(1)
 
-_basepath = _os.path.dirname(__file__)
-_filepath = _os.path.abspath(_os.path.join(_basepath, 'package-info.json'))
+_basepath = Path(__file__).parent
+_filepath = _basepath.joinpath("package-info.json").resolve()
+
 with open(_filepath) as f:
     package = json.load(f)
 
 package_name = package['name'].replace(' ', '_').replace('-', '_')
 __version__ = package['version']
-
-_current_path = _os.path.dirname(_os.path.abspath(__file__))
 
 _this_module = _sys.modules[__name__]
 
@@ -67,10 +67,6 @@ _js_dist.extend(
 _js_dist.extend(
     [
         {
-            'relative_package_path': 'third_party/js9prefs.js',
-            'namespace': package_name
-        },
-        {
             'relative_package_path': 'third_party/js9.min.js',
             'namespace': package_name
         },
@@ -96,11 +92,11 @@ _js_dist.extend(
 
 _css_dist = [
     {
-        "relative_package_path": 'third_party/js9.css',
+        "relative_package_path": 'third_party/js9support.css',
         'namespace': package_name,
         },
     {
-        "relative_package_path": 'third_party/js9support.css',
+        "relative_package_path": 'third_party/js9.css',
         'namespace': package_name,
         },
     ]
@@ -112,27 +108,81 @@ for _component in __all__:
 
 
 JS9_SUPPORT = "https://js9.si.edu/js9/js9support.min.js"
-JS9_HELPER_URL = '/js9_helper'
 
 
-def setup_js9_helper(app, install_dir='.'):
+def _join_url(*parts):
+    return re.sub("(?<!http:)//+", "/", '/'.join(parts))
 
+
+def setup_js9(app, config_path=None, install_dir=None, js9prefs=None):
+    
+    if config_path is not None:
+        if install_dir is not None or js9prefs is not None:
+            raise ValueError("can either set config path or the config items")
+        with open(config_path, 'r') as fo:
+            cfg = json.load(fo)
+            return setup_js9(
+                app,
+                install_dir=cfg.get('install_dir', None),
+                js9prefs=cfg.get('js9prefs', None),
+                )
+    if install_dir is None:
+        install_dir = '.'
     install_dir = Path(install_dir)
-
-    item_types = {
-        'js9worker.js': 'text/javascript',
-        'astroemw.wasm': 'application/wasm',
-        'astroemw.js': 'text/javascript',
-        'data.fits': 'application/fits',
-        }
 
     # resolve the url for dash routes prefix
     routes_prefix = app.config.routes_pathname_prefix or ''
-    url = f'{routes_prefix}/{JS9_HELPER_URL}/'.replace('//', '/')
+    _helper_url_stem = '/js9_helper'
+    _css_url_stem = f'/_dash-component-suites/{package_name}/third_party/assets'
 
     @app.server.route(
-        url + '<item>', endpoint='js9_helper')
+         _join_url(routes_prefix, _helper_url_stem, '<path:item>'),
+        endpoint='js9_helper')
     def js9_helper(item):
-        with open(install_dir.joinpath(item), 'rb') as fo:
-            content = fo.read()
-        return content, 200, {'Content-Type': item_types[item]}
+        return send_from_directory(install_dir, item)
+
+    @app.server.route(
+        _join_url(routes_prefix, _css_url_stem, '<path:item>'),
+        endpoint='css_assets')
+    def css_assets(item):
+        return send_from_directory(install_dir, item)
+    
+    # overwrite the jsprefs such that the install dir is set to the
+    # proper route
+    # we then add the route to external scripts of the app
+    _js9prefs = {
+        "globalOpts": {
+            "helperType":       "nodejs",
+            "helperPort":       2718,
+            "helperCGI":        "./cgi-bin/js9/js9Helper.cgi",
+            "debug":            0,
+            "loadProxy":        True,
+            "workDir":          "./tmp",
+            "workDirQuota":     100,
+            "dataPath":         "$HOME/Desktop:$HOME/data",
+            "analysisPlugins":  "./analysis-plugins",
+            "analysisWrappers": "./analysis-wrappers",
+            },
+        "imageOpts": {
+            "colormap":         "grey",
+            "scale":            "linear"
+            }
+        }
+    # merge any custom settings in js9prefs
+    if js9prefs is not None:
+        for k in _js9prefs.keys():
+            _js9prefs[k].update(js9prefs.get(k, dict()))
+    # set install dir
+    _js9prefs['globalOpts']['installDir'] = _join_url(routes_prefix, _helper_url_stem)
+    
+    # serve the js9prefs.js file
+    js9prefs_content = f"""var JS9Prefs = {json.dumps(_js9prefs)};"""
+
+    js9prefs_url = _join_url(routes_prefix, 'js9prefs.js')
+
+    @app.server.route(
+        js9prefs_url, endpoint='js9prefs')
+    def prefs():
+        return js9prefs_content, 200, {'Content-Type': 'text/javascript'}
+    
+    app.config.external_scripts.append(js9prefs_url)

@@ -92,7 +92,7 @@ export default class DashJS9 extends Component {
                         ref={this.js9c}
                         data-width="100%"
                         data-height="512px"
-                        style={{'maxHeight': '40vh'}}
+                        style={{'maxHeight': '80vh'}}
                         />
                         <div
                         id={id + '-js9Colorbar'}

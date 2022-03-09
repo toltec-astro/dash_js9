@@ -54,8 +54,8 @@
   font-style: normal; 
   font-weight: normal;
 
-  src: url("font/context-menu-icons.eot?2lkho");
-  src: url("font/context-menu-icons.eot?2lkho#iefix") format("embedded-opentype"), url("font/context-menu-icons.woff2?2lkho") format("woff2"), url("font/context-menu-icons.woff?2lkho") format("woff"), url("font/context-menu-icons.ttf?2lkho") format("truetype");
+  src: url("assets/font/context-menu-icons.eot?2lkho");
+  src: url("assets/font/context-menu-icons.eot?2lkho#iefix") format("embedded-opentype"), url("assets/font/context-menu-icons.woff2?2lkho") format("woff2"), url("assets/font/context-menu-icons.woff?2lkho") format("woff"), url("assets/font/context-menu-icons.ttf?2lkho") format("truetype");
 }
 
 .context-menu-icon-add:before {
